@@ -1,4 +1,4 @@
-package com.sedat.movieappwithcompose.ui.theme
+package com.sedat.movieappwithcompose.presentation.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
