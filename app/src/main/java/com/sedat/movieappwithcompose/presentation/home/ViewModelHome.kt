@@ -5,6 +5,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sedat.movieappwithcompose.domain.use_case.remote.movie.GetPopularMoviesUseCase
+import com.sedat.movieappwithcompose.domain.use_case.remote.movie.GetTopRatedMoviesUseCase
+import com.sedat.movieappwithcompose.domain.use_case.remote.movie.GetUpcomingMoviesUseCase
+import com.sedat.movieappwithcompose.presentation.home.movie.MovieListState
 import com.sedat.movieappwithcompose.util.Status
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -13,31 +16,61 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ViewModelHome @Inject constructor(
-    private val getPopularMoviesUseCase: GetPopularMoviesUseCase
+    private val getPopularMoviesUseCase: GetPopularMoviesUseCase,
+    private val getTopRatedMoviesUseCase: GetTopRatedMoviesUseCase,
+    private val getUpcomingMoviesUseCase: GetUpcomingMoviesUseCase
 ): ViewModel() {
 
-    private val _popularMovieListState = mutableStateOf<MovieListState>(MovieListState.Nothing)
-    val popularMovieListState: State<MovieListState> = _popularMovieListState
+    private val _movieListState = mutableStateOf<MovieListState>(MovieListState.IsLoading)
+    val movieListState: State<MovieListState> = _movieListState
 
-    init {
-        getPopularMovieList()
-    }
-
-    fun getPopularMovieList(){
+    fun getPopularMovies(){
         getPopularMoviesUseCase.invoke(page = 1, language = "en").onEach {
             when(it.status){
                 Status.LOADING ->{
-                    _popularMovieListState.value = MovieListState.IsLoading
+                    _movieListState.value = MovieListState.IsLoading
                 }
                 Status.SUCCESS ->{
-                    _popularMovieListState.value = MovieListState.IsSuccessful(it.data ?: listOf())
+                    _movieListState.value = MovieListState.IsSuccessful(it.data ?: listOf())
                 }
                 Status.ERROR ->{
-                    _popularMovieListState.value = MovieListState.Error(message = it.message ?: "Error!")
+                    _movieListState.value = MovieListState.Error(message = it.message ?: "Error!")
+                }
+            }
+        }.launchIn(viewModelScope)
+    }
+
+    fun getTopRatedMovies(){
+        getTopRatedMoviesUseCase.invoke(page = 1, language = "en").onEach {
+            when(it.status){
+                Status.LOADING ->{
+                    _movieListState.value = MovieListState.IsLoading
+                }
+                Status.SUCCESS ->{
+                    _movieListState.value = MovieListState.IsSuccessful(it.data ?: listOf())
+                }
+                Status.ERROR ->{
+                    _movieListState.value = MovieListState.Error(message = it.message ?: "Error!")
                 }
 
             }
         }.launchIn(viewModelScope)
+    }
 
+    fun getUpcomingMovies(){
+        getUpcomingMoviesUseCase.invoke(page = 1, language = "TR").onEach {
+            when(it.status){
+                Status.LOADING ->{
+                    _movieListState.value = MovieListState.IsLoading
+                }
+                Status.SUCCESS ->{
+                    _movieListState.value = MovieListState.IsSuccessful(it.data ?: listOf())
+                }
+                Status.ERROR ->{
+                    _movieListState.value = MovieListState.Error(message = it.message ?: "Error!")
+                }
+
+            }
+        }.launchIn(viewModelScope)
     }
 }

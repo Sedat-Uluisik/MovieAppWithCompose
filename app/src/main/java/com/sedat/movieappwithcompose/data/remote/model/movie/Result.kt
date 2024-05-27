@@ -1,6 +1,8 @@
 package com.sedat.movieappwithcompose.data.remote.model.movie
 
 import com.google.gson.annotations.SerializedName
+import com.sedat.movieappwithcompose.data.remote.model.movie.Result
+import com.sedat.movieappwithcompose.domain.model.MovieDetails
 
 data class Result(
     val adult: Boolean,
@@ -16,7 +18,7 @@ data class Result(
     val overview: String,
     val popularity: Float,
     @SerializedName("poster_path")
-    val posterPath: String,
+    val posterPath: String?,
     @SerializedName("release_date")
     val releaseDate: String,
     val title: String,
@@ -37,4 +39,14 @@ data class Result(
         isFavourite = isFavorite,
         createdAt = System.currentTimeMillis()
     )*/
+}
+
+fun Result.toMovieDetails(): MovieDetails{
+    return MovieDetails(
+        overview = overview,
+        posterPath = posterPath ?: "",
+        releaseDate = releaseDate,
+        title = title,
+        voteAverage = voteAverage
+    )
 }
