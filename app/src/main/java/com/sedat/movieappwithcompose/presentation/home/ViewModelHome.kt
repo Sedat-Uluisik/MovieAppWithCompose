@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.sedat.movieappwithcompose.domain.use_case.remote.movie.GetPopularMoviesUseCase
 import com.sedat.movieappwithcompose.domain.use_case.remote.movie.GetTopRatedMoviesUseCase
 import com.sedat.movieappwithcompose.domain.use_case.remote.movie.GetUpcomingMoviesUseCase
+import com.sedat.movieappwithcompose.presentation.home.movie.MovieCategoryEvent
 import com.sedat.movieappwithcompose.presentation.home.movie.MovieListState
 import com.sedat.movieappwithcompose.util.Status
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -24,7 +25,7 @@ class ViewModelHome @Inject constructor(
     private val _movieListState = mutableStateOf<MovieListState>(MovieListState.IsLoading)
     val movieListState: State<MovieListState> = _movieListState
 
-    fun getPopularMovies(){
+    private fun getPopularMovies(){
         getPopularMoviesUseCase.invoke(page = 1, language = "en").onEach {
             when(it.status){
                 Status.LOADING ->{
@@ -40,7 +41,7 @@ class ViewModelHome @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    fun getTopRatedMovies(){
+    private fun getTopRatedMovies(){
         getTopRatedMoviesUseCase.invoke(page = 1, language = "en").onEach {
             when(it.status){
                 Status.LOADING ->{
@@ -57,7 +58,7 @@ class ViewModelHome @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    fun getUpcomingMovies(){
+    private fun getUpcomingMovies(){
         getUpcomingMoviesUseCase.invoke(page = 1, language = "TR").onEach {
             when(it.status){
                 Status.LOADING ->{
@@ -72,5 +73,13 @@ class ViewModelHome @Inject constructor(
 
             }
         }.launchIn(viewModelScope)
+    }
+
+    fun changeMovieCategory(movieCategoryEvent: MovieCategoryEvent){
+        when(movieCategoryEvent){
+            MovieCategoryEvent.POPULAR -> getPopularMovies()
+            MovieCategoryEvent.TOP_RATED -> getTopRatedMovies()
+            MovieCategoryEvent.UPCOMING -> getUpcomingMovies()
+        }
     }
 }

@@ -27,12 +27,8 @@ import com.sedat.movieappwithcompose.presentation.home.ViewModelHome
 @Composable
 fun UpcomingMovies(
     navController: NavController,
-    viewModel: ViewModelHome = hiltViewModel()
+    viewModel: ViewModelHome
 ) {
-
-    LaunchedEffect(key1 = Unit){
-        viewModel.getUpcomingMovies()
-    }
 
     val popularMovies = viewModel.movieListState.value
 
