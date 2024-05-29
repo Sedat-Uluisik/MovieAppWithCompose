@@ -1,6 +1,6 @@
 package com.sedat.movieappwithcompose.domain.use_case.remote.movie
 
-import com.sedat.movieappwithcompose.data.remote.model.movie.toMovieDetails
+import com.sedat.movieappwithcompose.data.remote.model.toMovieDetails
 import com.sedat.movieappwithcompose.domain.model.MovieDetails
 import com.sedat.movieappwithcompose.domain.repository.movie.MovieRepository
 import com.sedat.movieappwithcompose.util.Resource

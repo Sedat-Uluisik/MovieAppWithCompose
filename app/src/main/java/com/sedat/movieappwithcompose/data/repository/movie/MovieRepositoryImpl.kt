@@ -2,7 +2,7 @@ package com.sedat.movieappwithcompose.data.repository.movie
 
 import com.sedat.movieappwithcompose.data.remote.MovieAPI
 import com.sedat.movieappwithcompose.data.remote.model.movie.MovieDto
-import com.sedat.movieappwithcompose.data.remote.model.movie.Result
+import com.sedat.movieappwithcompose.data.remote.model.Result
 import com.sedat.movieappwithcompose.domain.repository.movie.MovieRepository
 import retrofit2.Response
 import javax.inject.Inject

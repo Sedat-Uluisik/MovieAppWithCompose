@@ -1,7 +1,6 @@
-package com.sedat.movieappwithcompose.data.remote.model.movie
+package com.sedat.movieappwithcompose.data.remote.model
 
 import com.google.gson.annotations.SerializedName
-import com.sedat.movieappwithcompose.data.remote.model.movie.Result
 import com.sedat.movieappwithcompose.domain.model.MovieDetails
 
 data class Result(
