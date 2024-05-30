@@ -48,6 +48,7 @@ import com.sedat.movieappwithcompose.presentation.home.movie.MovieScreen
 import com.sedat.movieappwithcompose.presentation.home.movie.PopularMovies
 import com.sedat.movieappwithcompose.presentation.home.movie.TopRatedMovies
 import com.sedat.movieappwithcompose.presentation.home.movie.UpcomingMovies
+import com.sedat.movieappwithcompose.presentation.home.peoples.PeoplesScreen
 import kotlin.math.roundToInt
 
 @Composable
@@ -71,7 +72,7 @@ fun Home(
         when(mainCategoryType){
             MainCategoryEvent.MOVIE -> MovieScreen(navController = navController, viewModelHome = viewModelHome)
             MainCategoryEvent.TV -> MovieScreen(navController = navController, viewModelHome = viewModelHome)
-            MainCategoryEvent.PEOPLE -> MovieScreen(navController = navController, viewModelHome = viewModelHome)
+            MainCategoryEvent.PEOPLE -> PeoplesScreen()
         }
     }
 }

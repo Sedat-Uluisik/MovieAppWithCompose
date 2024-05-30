@@ -19,7 +19,7 @@ fun MovieDto.toMovie(): List<Movie>{
         Movie(
             result.id,
             result.posterPath ?: "",
-            result.title,
+            result.title ?: result.originalName,
             result.releaseDate,
             result.voteAverage
         )

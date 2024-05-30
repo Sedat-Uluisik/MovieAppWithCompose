@@ -17,3 +17,5 @@ data class PeopleResult(
     @SerializedName("known_for")
     val knownFor: List<Result>
 )
+
+fun PeopleResult.getPosterUrl() = "https://image.tmdb.org/t/p/w500${profilePath}"

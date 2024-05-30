@@ -14,13 +14,15 @@ data class Result(
     val originalLanguage: String,
     @SerializedName("original_title")
     val originalTitle: String,
+    @SerializedName("original_name")
+    val originalName: String,
     val overview: String,
     val popularity: Float,
     @SerializedName("poster_path")
     val posterPath: String?,
     @SerializedName("release_date")
     val releaseDate: String,
-    val title: String,
+    val title: String?,
     val video: Boolean,
     @SerializedName("vote_average")
     val voteAverage: Float,
@@ -28,16 +30,6 @@ data class Result(
     val voteCount: Int
 ){
     fun getImageUrl() = "https://image.tmdb.org/t/p/w500${posterPath}"
-
-    /*fun toMovieEntity(isFavorite: Boolean = false) = MovieEntity(
-        movieId = id,
-        url = getImageUrl(),
-        title = title,
-        releaseDate = releaseDate,
-        imdb = voteAverage,
-        isFavourite = isFavorite,
-        createdAt = System.currentTimeMillis()
-    )*/
 }
 
 fun Result.toMovieDetails(): MovieDetails{
@@ -45,7 +37,7 @@ fun Result.toMovieDetails(): MovieDetails{
         overview = overview,
         posterPath = posterPath ?: "",
         releaseDate = releaseDate,
-        title = title,
+        title = title ?: originalName,
         voteAverage = voteAverage
     )
 }

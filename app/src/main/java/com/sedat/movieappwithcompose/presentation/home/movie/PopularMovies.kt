@@ -56,9 +56,6 @@ fun PopularMovies(
             is MovieListState.Error ->{
                 Text(text = popularMovies.message)
             }
-            else ->{
-
-            }
         }
     }
 }
