@@ -13,9 +13,10 @@ data class Result(
     @SerializedName("original_language")
     val originalLanguage: String,
     @SerializedName("original_title")
-    val originalTitle: String,
+    val originalTitle: String?,
     @SerializedName("original_name")
-    val originalName: String,
+    val originalName: String?,
+    val name: String?,
     val overview: String,
     val popularity: Float,
     @SerializedName("poster_path")
@@ -37,7 +38,9 @@ fun Result.toMovieDetails(): MovieDetails{
         overview = overview,
         posterPath = posterPath ?: "",
         releaseDate = releaseDate,
-        title = title ?: originalName,
+        title = getName(),
         voteAverage = voteAverage
     )
 }
+
+fun Result.getName() = title ?: originalTitle ?: name ?: originalName ?: "Name is not found"

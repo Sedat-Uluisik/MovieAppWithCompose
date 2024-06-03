@@ -2,6 +2,7 @@ package com.sedat.movieappwithcompose.data.remote.model.movie
 
 import com.google.gson.annotations.SerializedName
 import com.sedat.movieappwithcompose.data.remote.model.Result
+import com.sedat.movieappwithcompose.data.remote.model.getName
 import com.sedat.movieappwithcompose.domain.model.Movie
 
 data class MovieDto(
@@ -19,7 +20,7 @@ fun MovieDto.toMovie(): List<Movie>{
         Movie(
             result.id,
             result.posterPath ?: "",
-            result.title ?: result.originalName,
+            result.getName(),
             result.releaseDate,
             result.voteAverage
         )
