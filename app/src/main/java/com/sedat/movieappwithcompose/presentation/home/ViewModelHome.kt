@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sedat.movieappwithcompose.domain.use_case.remote.movie.GetPopularMoviesUseCase
 import com.sedat.movieappwithcompose.domain.use_case.remote.movie.GetTopRatedMoviesUseCase
+import com.sedat.movieappwithcompose.domain.use_case.remote.movie.GetTrendMoviesUseCase
 import com.sedat.movieappwithcompose.domain.use_case.remote.movie.GetUpcomingMoviesUseCase
 import com.sedat.movieappwithcompose.presentation.home.movie.MovieCategoryEvent
 import com.sedat.movieappwithcompose.presentation.home.movie.MovieListState
@@ -19,7 +20,8 @@ import javax.inject.Inject
 class ViewModelHome @Inject constructor(
     private val getPopularMoviesUseCase: GetPopularMoviesUseCase,
     private val getTopRatedMoviesUseCase: GetTopRatedMoviesUseCase,
-    private val getUpcomingMoviesUseCase: GetUpcomingMoviesUseCase
+    private val getUpcomingMoviesUseCase: GetUpcomingMoviesUseCase,
+    private val getTrendMoviesUseCase: GetTrendMoviesUseCase
 ): ViewModel() {
 
     private val _movieListState = mutableStateOf<MovieListState>(MovieListState.IsLoading)
@@ -75,11 +77,29 @@ class ViewModelHome @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
+    private fun getTrendMovies(){
+        getTrendMoviesUseCase.invoke(time = "week", region = "tr", page = 1, language = "tr").onEach {
+            when(it.status){
+                Status.LOADING ->{
+                    _movieListState.value = MovieListState.IsLoading
+                }
+                Status.SUCCESS ->{
+                    _movieListState.value = MovieListState.IsSuccessful(it.data ?: listOf())
+                }
+                Status.ERROR ->{
+                    _movieListState.value = MovieListState.Error(message = it.message ?: "Error!")
+                }
+
+            }
+        }.launchIn(viewModelScope)
+    }
+
     fun changeMovieCategory(movieCategoryEvent: MovieCategoryEvent){
         when(movieCategoryEvent){
             MovieCategoryEvent.POPULAR -> getPopularMovies()
             MovieCategoryEvent.TOP_RATED -> getTopRatedMovies()
             MovieCategoryEvent.UPCOMING -> getUpcomingMovies()
+            MovieCategoryEvent.TREND -> getTrendMovies()
         }
     }
 }

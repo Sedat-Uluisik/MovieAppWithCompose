@@ -1,8 +1,8 @@
 package com.sedat.movieappwithcompose.di
 
 import com.sedat.movieappwithcompose.data.remote.MovieAPI
-import com.sedat.movieappwithcompose.data.repository.people.PeopleRepositoryImpl
-import com.sedat.movieappwithcompose.domain.repository.people.PeopleRepository
+import com.sedat.movieappwithcompose.data.repository.people.PersonRepositoryImpl
+import com.sedat.movieappwithcompose.domain.repository.people.PersonRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -11,10 +11,10 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object PeopleModule {
+object PersonModule {
     @Provides
     @Singleton
-    fun provideRepository(movieAPI: MovieAPI): PeopleRepository {
-        return PeopleRepositoryImpl(movieAPI = movieAPI)
+    fun provideRepository(movieAPI: MovieAPI): PersonRepository {
+        return PersonRepositoryImpl(movieAPI = movieAPI)
     }
 }

@@ -1,8 +1,8 @@
-package com.sedat.movieappwithcompose.data.remote.model.people
+package com.sedat.movieappwithcompose.data.remote.model.person
 
 import com.google.gson.annotations.SerializedName
 
-data class PeopleDto(
+data class PersonDto(
     val page: Int,
     val results: List<PeopleResult>,
     @SerializedName("total_pages")

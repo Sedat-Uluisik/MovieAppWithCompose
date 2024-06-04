@@ -49,13 +49,17 @@ fun MovieScreen(
             viewModelHome.changeMovieCategory(MovieCategoryEvent.UPCOMING)
             UpcomingMovies(navController = navController, viewModel = viewModelHome)
         }
+        MovieCategoryEvent.TREND ->{
+            viewModelHome.changeMovieCategory(MovieCategoryEvent.TREND)
+            TrendMovies(navController = navController, viewModel = viewModelHome)
+        }
     }
 }
 
 @Composable
-fun MovieCategorySelector(selected_category: (MovieCategoryEvent) -> Unit) {
+fun MovieCategorySelector(selectedCategory: (MovieCategoryEvent) -> Unit) {
 
-    var selectedCategory by rememberSaveable {
+    var selectedCategoryState by rememberSaveable {
         mutableStateOf(MovieCategoryEvent.POPULAR)
     }
 
@@ -68,12 +72,12 @@ fun MovieCategorySelector(selected_category: (MovieCategoryEvent) -> Unit) {
     ) {
         Button(
             onClick = {
-                selectedCategory = MovieCategoryEvent.POPULAR
-                selected_category.invoke(MovieCategoryEvent.POPULAR)
+                selectedCategoryState = MovieCategoryEvent.POPULAR
+                selectedCategory.invoke(MovieCategoryEvent.POPULAR)
             },
             shape = RoundedCornerShape(30.dp),
             colors = ButtonDefaults.buttonColors(
-                containerColor = if (selectedCategory == MovieCategoryEvent.POPULAR) Color.DarkGray else Color.Black,
+                containerColor = if (selectedCategoryState == MovieCategoryEvent.POPULAR) Color.DarkGray else Color.Black,
                 contentColor = Color.Magenta
             )
         ) {
@@ -84,12 +88,12 @@ fun MovieCategorySelector(selected_category: (MovieCategoryEvent) -> Unit) {
 
         Button(
             onClick = {
-                selectedCategory = MovieCategoryEvent.TOP_RATED
-                selected_category.invoke(MovieCategoryEvent.TOP_RATED)
+                selectedCategoryState = MovieCategoryEvent.TOP_RATED
+                selectedCategory.invoke(MovieCategoryEvent.TOP_RATED)
             },
             shape = RoundedCornerShape(30.dp),
             colors = ButtonDefaults.buttonColors(
-                containerColor = if (selectedCategory == MovieCategoryEvent.TOP_RATED) Color.DarkGray else Color.Black,
+                containerColor = if (selectedCategoryState == MovieCategoryEvent.TOP_RATED) Color.DarkGray else Color.Black,
                 contentColor = Color.Magenta
             )
         ) {
@@ -100,16 +104,32 @@ fun MovieCategorySelector(selected_category: (MovieCategoryEvent) -> Unit) {
 
         Button(
             onClick = {
-                selectedCategory = MovieCategoryEvent.UPCOMING
-                selected_category.invoke(MovieCategoryEvent.UPCOMING)
+                selectedCategoryState = MovieCategoryEvent.UPCOMING
+                selectedCategory.invoke(MovieCategoryEvent.UPCOMING)
             },
             shape = RoundedCornerShape(30.dp),
             colors = ButtonDefaults.buttonColors(
-                containerColor = if (selectedCategory == MovieCategoryEvent.UPCOMING) Color.DarkGray else Color.Black,
+                containerColor = if (selectedCategoryState == MovieCategoryEvent.UPCOMING) Color.DarkGray else Color.Black,
                 contentColor = Color.Magenta
             )
         ) {
             Text(text = "Yaklaşan Filmler")
+        }
+
+        Spacer(modifier = Modifier.width(4.dp))
+
+        Button(
+            onClick = {
+                selectedCategoryState = MovieCategoryEvent.TREND
+                selectedCategory.invoke(MovieCategoryEvent.TREND)
+            },
+            shape = RoundedCornerShape(30.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = if (selectedCategoryState == MovieCategoryEvent.TREND) Color.DarkGray else Color.Black,
+                contentColor = Color.Magenta
+            )
+        ) {
+            Text(text = "Trend Filmler")
         }
     }
 }

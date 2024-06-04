@@ -7,6 +7,7 @@ import retrofit2.Response
 interface MovieRepository {
     suspend fun getMovies(page: Int, language: String): MovieDto
     suspend fun getTopRatedMovies(page: Int, language: String): MovieDto
+    suspend fun getTrendMovies(time: String, region: String, page: Int, language: String): MovieDto
     suspend fun getUpcomingMovies(page: Int, language: String, region: String): MovieDto
     suspend fun getMovieDetails(movieId: Int, language: String): Response<Result>
 }

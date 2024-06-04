@@ -1,4 +1,4 @@
-package com.sedat.movieappwithcompose.presentation.home.peoples
+package com.sedat.movieappwithcompose.presentation.home.person
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -26,23 +26,20 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.TileMode
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImagePainter
 import coil.compose.SubcomposeAsyncImage
 import coil.compose.SubcomposeAsyncImageContent
 import com.sedat.movieappwithcompose.data.remote.model.getName
-import com.sedat.movieappwithcompose.data.remote.model.people.PeopleResult
-import com.sedat.movieappwithcompose.data.remote.model.people.getPosterUrl
+import com.sedat.movieappwithcompose.data.remote.model.person.PeopleResult
+import com.sedat.movieappwithcompose.data.remote.model.person.getPosterUrl
 
 @Composable
-fun PeopleListRow(
+fun PersonListRow(
     peopleResult: PeopleResult
 ) {
     Box(

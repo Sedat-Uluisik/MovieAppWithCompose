@@ -1,4 +1,4 @@
-package com.sedat.movieappwithcompose.data.remote.model.people
+package com.sedat.movieappwithcompose.data.remote.model.person
 
 import com.google.gson.annotations.SerializedName
 import com.sedat.movieappwithcompose.data.remote.model.Result

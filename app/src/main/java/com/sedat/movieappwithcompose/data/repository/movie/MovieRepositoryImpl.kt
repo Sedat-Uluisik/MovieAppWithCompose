@@ -18,6 +18,15 @@ class MovieRepositoryImpl @Inject constructor(
         return movieAPI.getTopRatedMovies(language = language, page =  page)
     }
 
+    override suspend fun getTrendMovies(
+        time: String,
+        region: String,
+        page: Int,
+        language: String
+    ): MovieDto {
+        return movieAPI.getTrendMovies(time = time, language = language, region = region, page = page)
+    }
+
     override suspend fun getUpcomingMovies(page: Int, language: String, region: String): MovieDto {
         return movieAPI.getUpcomingMovies(language = language, page = page, region = region)
     }

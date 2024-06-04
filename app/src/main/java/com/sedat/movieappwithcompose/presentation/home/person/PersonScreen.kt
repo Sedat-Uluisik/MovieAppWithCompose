@@ -1,4 +1,4 @@
-package com.sedat.movieappwithcompose.presentation.home.peoples
+package com.sedat.movieappwithcompose.presentation.home.person
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,31 +13,36 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 
 @Composable
-fun PeoplesScreen(
-    viewModelPeoples: ViewModelPeoples = hiltViewModel()
+fun PersonScreen(
+    viewModelPerson: ViewModelPerson = hiltViewModel()
 ) {
 
-    val popularPeoples = viewModelPeoples.popularPersons.value
+    val popularPeoples = viewModelPerson.popularPersons.value
 
     Box(
         modifier = Modifier
             .fillMaxSize()
     ){
         when(popularPeoples){
-            is PeopleListState.IsLoading ->{
+            is PersonListState.IsLoading ->{
                 CircularProgressIndicator(color = Color.Yellow)
             }
-            is PeopleListState.IsSuccessful ->{
+            is PersonListState.IsSuccessful ->{
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxSize()
                 ){
-                    items(popularPeoples.data){
-                        PeopleListRow(peopleResult = it)
+                    items(
+                        items = popularPeoples.data,
+                        key = {
+                            it.originalName
+                        }
+                    ){
+                        PersonListRow(peopleResult = it)
                     }
                 }
             }
-            is PeopleListState.Error ->{
+            is PersonListState.Error ->{
                 Text(text = popularPeoples.message, fontSize = 25.sp, color = Color.Red)
             }
         }
