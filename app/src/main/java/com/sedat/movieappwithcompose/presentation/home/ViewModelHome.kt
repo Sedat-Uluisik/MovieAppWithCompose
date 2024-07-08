@@ -77,8 +77,8 @@ class ViewModelHome @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    private fun getTrendMovies(){
-        getTrendMoviesUseCase.invoke(time = "week", region = "tr", page = 1, language = "tr").onEach {
+    fun getTrendMovies(dayOrWeek: Boolean){
+        getTrendMoviesUseCase.invoke(time = if(dayOrWeek) "day" else "week", region = "tr", page = 1, language = "tr").onEach {
             when(it.status){
                 Status.LOADING ->{
                     _movieListState.value = MovieListState.IsLoading
@@ -99,7 +99,7 @@ class ViewModelHome @Inject constructor(
             MovieCategoryEvent.POPULAR -> getPopularMovies()
             MovieCategoryEvent.TOP_RATED -> getTopRatedMovies()
             MovieCategoryEvent.UPCOMING -> getUpcomingMovies()
-            MovieCategoryEvent.TREND -> getTrendMovies()
+            MovieCategoryEvent.TREND -> getTrendMovies(true)
         }
     }
 }
