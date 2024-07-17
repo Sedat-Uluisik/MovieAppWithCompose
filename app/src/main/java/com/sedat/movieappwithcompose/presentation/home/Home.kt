@@ -40,6 +40,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.sedat.movieappwithcompose.presentation.home.movie.MovieScreen
 import com.sedat.movieappwithcompose.presentation.home.person.PersonScreen
+import com.sedat.movieappwithcompose.presentation.home.tv.TVScreen
 import kotlin.math.roundToInt
 
 @Composable
@@ -62,7 +63,7 @@ fun Home(
         }
         when(mainCategoryType){
             MainCategoryEvent.MOVIE -> MovieScreen(navController = navController, viewModelHome = viewModelHome)
-            MainCategoryEvent.TV -> MovieScreen(navController = navController, viewModelHome = viewModelHome)
+            MainCategoryEvent.TV -> TVScreen(navController = navController)
             MainCategoryEvent.PEOPLE -> PersonScreen()
         }
     }
