@@ -21,7 +21,6 @@ fun PopularTVs(
 ) {
     val popularTVs = viewModelTVs.tvListState.value
 
-
     Box(
         modifier = Modifier
             .fillMaxSize()

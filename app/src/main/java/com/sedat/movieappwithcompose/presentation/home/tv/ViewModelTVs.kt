@@ -5,6 +5,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sedat.movieappwithcompose.domain.use_case.remote.tv_series.GetPopularTVsUseCase
+import com.sedat.movieappwithcompose.domain.use_case.remote.tv_series.GetTopRatedTVsUseCase
+import com.sedat.movieappwithcompose.domain.use_case.remote.tv_series.GetTrendTVsUseCase
 import com.sedat.movieappwithcompose.presentation.home.movie.MovieCategoryEvent
 import com.sedat.movieappwithcompose.presentation.home.movie.MovieListState
 import com.sedat.movieappwithcompose.util.Status
@@ -15,7 +17,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ViewModelTVs @Inject constructor(
-    private val getPopularTVsUseCase: GetPopularTVsUseCase
+    private val getPopularTVsUseCase: GetPopularTVsUseCase,
+    private val getTopRatedTVsUseCase: GetTopRatedTVsUseCase,
+    private val getTrendTVsUseCase: GetTrendTVsUseCase
 ): ViewModel() {
     private val _tvListState = mutableStateOf<TVListState>(TVListState.IsLoading)
     val tvListState: State<TVListState> = _tvListState
@@ -36,8 +40,8 @@ class ViewModelTVs @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    private fun getTopRatedTvs(){  //düzenlenecek
-        getPopularTVsUseCase.invoke(page = 1, language = "en").onEach {
+    private fun getTopRatedTvs(){
+        getTopRatedTVsUseCase.invoke(page = 1, language = "en").onEach {
             when(it.status){
                 Status.LOADING ->{
                     _tvListState.value = TVListState.IsLoading
@@ -52,10 +56,28 @@ class ViewModelTVs @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
+    private fun getTrendTvs(dayOrWeek: Boolean){
+        getTrendTVsUseCase.invoke(time = if(dayOrWeek) "day" else "week", region = "tr", page = 1, language = "tr").onEach {
+            when(it.status){
+                Status.LOADING ->{
+                    _tvListState.value = TVListState.IsLoading
+                }
+                Status.SUCCESS ->{
+                    _tvListState.value = TVListState.IsSuccessful(it.data ?: listOf())
+                }
+                Status.ERROR ->{
+                    _tvListState.value = TVListState.Error(message = it.message ?: "Error!")
+                }
+
+            }
+        }.launchIn(viewModelScope)
+    }
+
     fun changeTvCategory(tvCategoryEvent: TVCategoryEvent){
         when(tvCategoryEvent){
             TVCategoryEvent.POPULAR -> getPopularTvs()
             TVCategoryEvent.TOP_RATED -> getTopRatedTvs()
+            TVCategoryEvent.TREND -> getTrendTvs(true)
         }
     }
 }

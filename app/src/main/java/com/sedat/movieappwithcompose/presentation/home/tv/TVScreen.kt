@@ -43,8 +43,12 @@ fun TVScreen(
             PopularTVs(navController = navController, viewModelTVs = viewModelTVs)
         }
         TVCategoryEvent.TOP_RATED -> {
-            //viewModelHome.changeMovieCategory(MovieCategoryEvent.TOP_RATED)
-            TopRatedTVs(navController = navController)
+            viewModelTVs.changeTvCategory(TVCategoryEvent.TOP_RATED)
+            TopRatedTVs(navController = navController, viewModelTVs = viewModelTVs)
+        }
+        TVCategoryEvent.TREND ->{
+            viewModelTVs.changeTvCategory(TVCategoryEvent.TREND)
+            TrendTVsScreen(navController = navController, viewModelTVs = viewModelTVs)
         }
     }
 }

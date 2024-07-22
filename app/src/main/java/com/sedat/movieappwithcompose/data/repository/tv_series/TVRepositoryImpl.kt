@@ -13,4 +13,17 @@ class TVRepositoryImpl @Inject constructor(
     override suspend fun getPopularTVs(page: Int, language: String): TVDto {
         return movieAPI.getPopularTVs(language = language, page = page)
     }
+
+    override suspend fun getTopRatedTVs(page: Int, language: String): TVDto {
+        return movieAPI.getTopRatedTVs(language, page)
+    }
+
+    override suspend fun getTrendTVs(
+        time: String,
+        region: String,
+        page: Int,
+        language: String
+    ): TVDto {
+        return movieAPI.getTrendTVs(time, language, region, page)
+    }
 }

@@ -4,4 +4,7 @@ import com.sedat.movieappwithcompose.data.remote.model.tv.TVDto
 
 interface TvSeriesRepository {
     suspend fun getPopularTVs(page: Int, language: String): TVDto
+    suspend fun getTopRatedTVs(page: Int, language: String): TVDto
+    suspend fun getTrendTVs(time: String, region: String, page: Int, language: String): TVDto
+
 }
