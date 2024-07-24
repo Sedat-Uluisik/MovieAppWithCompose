@@ -142,14 +142,16 @@ fun CustomSwitchButton(onCheckedChange: (Boolean) -> Unit) {
 
                     Button(
                         onClick = {
-                            selectedTab = index
-                            onCheckedChange.invoke(
-                                when(index){
-                                    0 -> true
-                                    1 -> false
-                                    else -> true
-                                }
-                            )
+                            if(selectedTab != index){
+                                selectedTab = index
+                                onCheckedChange.invoke(
+                                    when(index){
+                                        0 -> true
+                                        1 -> false
+                                        else -> true
+                                    }
+                                )
+                            }
                         },
                         modifier = Modifier.width(((screenWidth2 * 0.25) / 2).dp),
                         colors = ButtonDefaults.buttonColors(

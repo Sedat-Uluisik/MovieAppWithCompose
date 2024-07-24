@@ -97,5 +97,21 @@ fun TVCategorySelector(selectedCategory: (TVCategoryEvent) -> Unit) {
         ) {
             Text(text = "En Çok Oy Alanlar")
         }
+
+        Spacer(modifier = Modifier.width(4.dp))
+
+        Button(
+            onClick = {
+                selectedCategoryState = TVCategoryEvent.TREND
+                selectedCategory.invoke(TVCategoryEvent.TREND)
+            },
+            shape = RoundedCornerShape(30.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = if (selectedCategoryState == TVCategoryEvent.TREND) Color.DarkGray else Color.Black,
+                contentColor = Color.Magenta
+            )
+        ) {
+            Text(text = "Trend TV Programları")
+        }
     }
 }

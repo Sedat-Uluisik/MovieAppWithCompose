@@ -56,7 +56,7 @@ class ViewModelTVs @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    private fun getTrendTvs(dayOrWeek: Boolean){
+    fun getTrendTvs(dayOrWeek: Boolean){
         getTrendTVsUseCase.invoke(time = if(dayOrWeek) "day" else "week", region = "tr", page = 1, language = "tr").onEach {
             when(it.status){
                 Status.LOADING ->{
